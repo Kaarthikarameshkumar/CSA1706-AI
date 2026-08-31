@@ -1,0 +1,10 @@
+% Database: Name and Date of Birth
+
+person(rajesh, '10-05-2005').
+person(karthik, '15-08-2004').
+person(priya, '22-01-2006').
+person(anitha, '30-11-2005').
+
+% Query to find DOB of a person
+dob(Name, DOB) :-
+    person(Name, DOB).
