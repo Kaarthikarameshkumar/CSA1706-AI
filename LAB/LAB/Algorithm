@@ -1,0 +1,76 @@
+# A* Algorithm
+
+# Graph with edge costs
+graph = {
+    'A': {'B': 1, 'C': 3},
+    'B': {'D': 3, 'E': 1},
+    'C': {'F': 2},
+    'D': {'G': 2},
+    'E': {'G': 3},
+    'F': {'G': 1},
+    'G': {}
+}
+
+# Heuristic values
+h = {
+    'A': 6,
+    'B': 4,
+    'C': 4,
+    'D': 2,
+    'E': 2,
+    'F': 1,
+    'G': 0
+}
+
+start = 'A'
+goal = 'G'
+
+# Open list and closed list
+open_list = [start]
+closed_list = []
+
+# Cost from start node
+g = {start: 0}
+
+# Parent of each node
+parent = {start: None}
+
+while open_list:
+
+    # Select node with minimum f = g + h
+    current = min(open_list, key=lambda node: g[node] + h[node])
+
+    # Check goal
+    if current == goal:
+        break
+
+    open_list.remove(current)
+    closed_list.append(current)
+
+    # Check all neighboring nodes
+    for neighbor, cost in graph[current].items():
+
+        new_cost = g[current] + cost
+
+        if neighbor not in g or new_cost < g[neighbor]:
+
+            g[neighbor] = new_cost
+            parent[neighbor] = current
+
+            if neighbor not in open_list:
+                open_list.append(neighbor)
+
+# Construct the path
+path = []
+node = goal
+
+while node is not None:
+    path.append(node)
+    node = parent[node]
+
+path.reverse()
+
+print("A* Algorithm")
+print("------------")
+print("Shortest Path:", " -> ".join(path))
+print("Total Cost:", g[goal])
